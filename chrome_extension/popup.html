@@ -9,14 +9,19 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.limit_select').live('click', function () {
+			var vocab_size = $(this).attr('id');
+			//var vocab_size = parseInt(vocab_size.substring(0, vocab_size.length - 1));
+
 			$.ajax({url: "data.js"}).done(function(data) {
 				$.ajax({url: "content.js"}).done(function(content) {
-					var generated = data + '\n\n' + content + '\n\n' + 'alert("super " + NewVocab_data.length);'
+					var generated = data + '\n\n' + content + '\n\n' + 'highlightPage(' + vocab_size + ');alert("super " + NewVocab_data.length);'
 					chrome.tabs.executeScript({'code': generated}, function() {
 					 	console.log("done content.js");
 					});
 				});
 			});
+
+			//
 		});
 	});
 </script>
@@ -34,17 +39,26 @@
 
 <body>
 	<h1>New Vocabulary</h1>
+	<a href="#" class="limit_select" id="250">&#x00BC;k</a>
+	<a href="#" class="limit_select" id="500">&#x00BD;k</a>
+	<a href="#" class="limit_select" id="750">&#x00BE;k</a>
 
-	<a href="#" class="limit_select" id="1k">1k</a>
-	<a href="#" class="limit_select" id="2k">2k</a>
-	<a href="#" class="limit_select" id="3k">3k</a>
-	<a href="#" class="limit_select" id="4k">4k</a>
-	<a href="#" class="limit_select" id="5k">5k</a>
+	<a href="#" class="limit_select" id="1000">1k</a>
+	<a href="#" class="limit_select" id="2000">2k</a>
+	<a href="#" class="limit_select" id="3000">3k</a>
+	<a href="#" class="limit_select" id="4000">4k</a>
+	<a href="#" class="limit_select" id="5000">5k</a>
 
-	<a href="#" class="limit_select" id="6k">6k</a>
-	<a href="#" class="limit_select" id="7k">7k</a>
-	<a href="#" class="limit_select" id="8k">8k</a>
-	<a href="#" class="limit_select" id="9k">9k</a>
-	<a href="#" class="limit_select" id="10k">10k</a>
+	<a href="#" class="limit_select" id="6000">6k</a>
+	<a href="#" class="limit_select" id="7000">7k</a>
+	<a href="#" class="limit_select" id="8000">8k</a>
+	<a href="#" class="limit_select" id="9000">9k</a>
+	<a href="#" class="limit_select" id="10000">10k</a>
+
+	<a href="#" class="limit_select" id="15000">15k</a>
+	<a href="#" class="limit_select" id="20000">20k</a>
+	<a href="#" class="limit_select" id="25000">25k</a>
+	<a href="#" class="limit_select" id="30000">30k</a>
+	<a href="#" class="limit_select" id="35000">35k</a>
 </body>
 </html>
