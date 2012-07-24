@@ -2,13 +2,56 @@
 <html>
 <head> <!-- No title and meta tags are necessary for the extension -->
 
-<link rel="stylesheet" type="text/css" href="style.css" />
+<!--<link rel="stylesheet" type="text/css" href="style.css" />-->
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<!--<script type="text/javascript" src="data.js"></script>-->
 
 <script type="text/javascript">
+	function build_fixer(list) {
+		var data = JSON.stringify(list);
+		return [
+			"(function() {",
+			//"var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;",
+			"var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = false;",
+			"ga.textContent = 'NewVocab_data = " + data + ";';",
+			"var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);",
+			"console.log('Inlined');",
+			"})();",
+		].join('\n')
+	}
+
+	//console.log(build_fixer(["ala", "kot"]));
+
 	$(document).ready(function() {
 		$('.limit_select').live('click', function () {
-			chrome.tabs.executeScript({'file': 'content.js'});
+			console.log("Clicked");
+			//chrome.tabs.executeScript({'file': 'content.js'});
+
+			// chrome.tabs.executeScript({'file': 'data.js'}, function() {
+			// 	console.log("Loading content.js");
+			// 	chrome.tabs.executeScript({'file': 'content.js'});
+			// });
+
+			chrome.tabs.executeScript({'code': build_fixer(NewVocab_data.slice(0, 10)), 'runAt': 'document_start'}, function() {
+				console.log("Loading content.js");
+				chrome.tabs.executeScript({'file': 'content.js', 'runAt': 'document_end'});
+			});
+
+			$.ajax({url: "data.js"}).done(function(data) {
+				//alert(data.substring(0, 111));
+				$.ajax({url: "content.js"}).done(function(content) {
+					//alert(content.substring(0, 111));
+					var generated = data + '\n\n' + content + '\n\n' + 'alert("super " + NewVocab_data.length);'
+					chrome.tabs.executeScript({'code': generated}, function() {
+					 	console.log("done content.js");
+					 });
+				});
+			});
+
+			// chrome.tabs.executeScript({'code': 'alert("super")'}, function() {
+			// 	console.log("Loading content.js");
+			// 	chrome.tabs.executeScript({'file': 'content.js', 'runAt': 'document_end'});
+			// });
 		});
 	});
 </script>
