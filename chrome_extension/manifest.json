@@ -1,15 +1,22 @@
 {
-    "name": "NewVocab",
-    "version": "0.2",
-    "description": "Highlight Words You Don't Known In Your Browser",
-    "browser_action": {
-        "default_icon": "icon.png",
-        "default_title": "NewVocab",
-        "popup": "popup.html"
-    },
-    "permissions": [
-        "tabs", 
-        "http://*/*",
-        "https://*/*"
-    ]
+	"name": "NewVocab",
+	"version": "0.2",
+	"description": "Highlight Words You Don't Known In Your Browser",
+	"browser_action": {
+		"default_icon": "icons/icon_19.png",
+		"default_title": "NewVocab",
+		"popup": "popup.html"
+	},
+	"permissions": [
+		"tabs",
+		"http://*/*",
+		"https://*/*"
+	],
+	"icons": {
+		"16":  "icons/icon_16.png",
+		"19":  "icons/icon_19.png",
+		"32":  "icons/icon_32.png",
+		"48":  "icons/icon_48.png",
+		"128": "icons/icon_128.png"
+	}
 }

@@ -14,7 +14,7 @@
 
 			$.ajax({url: "data.js"}).done(function(data) {
 				$.ajax({url: "content.js"}).done(function(content) {
-					var generated = data + '\n\n' + content + '\n\n' + 'highlightPage(' + vocab_size + ');alert("super " + NewVocab_data.length);'
+					var generated = [data, content, 'highlightPage(' + vocab_size + ');'].join('\n\n');
 					chrome.tabs.executeScript({'code': generated}, function() {
 					 	console.log("done content.js");
 					});
